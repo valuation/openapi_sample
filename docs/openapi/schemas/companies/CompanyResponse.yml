@@ -1,0 +1,15 @@
+type: object
+required:
+  - uuid
+  - email
+  - business_experience
+properties:
+  uuid:
+    type: string
+    format: uuid
+    description: 会社UUID
+    nullable: false
+  email:
+    $ref: './parts/Email.yml'
+  business_experience:
+    $ref: '#/components/schemas/BusinessExperience'

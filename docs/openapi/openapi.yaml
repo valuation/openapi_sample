@@ -1,0 +1,35 @@
+openapi: 3.0.3
+info:
+  title: OpenAPI
+  version: 1.0.0
+paths:
+  /companies/me:
+    get:
+      tags:
+        - Company
+      description: 会社情報取得
+      operationId: FindMyCompany
+      responses:
+        '200':
+          description: 取得成功
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CompanyResponse'
+        '401':
+          description: 認証エラー
+        '500':
+          description: 想定外サーバサイドエラー
+components:
+  schemas:
+    ###################################################################
+    # Request / Response定義
+    ###################################################################
+    CompanyResponse:
+      $ref: './schemas/companies/CompanyResponse.yml'
+
+    ###################################################################
+    # 共通パーツ定義
+    ###################################################################
+    BusinessExperience:
+      $ref: './schemas/common/BusinessExperience.yml'

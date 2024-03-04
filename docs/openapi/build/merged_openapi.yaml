@@ -1,0 +1,75 @@
+openapi: 3.0.3
+info:
+  title: OpenAPI
+  version: 1.0.0
+paths:
+  /companies/me:
+    get:
+      tags:
+        - Company
+      description: 会社情報取得
+      operationId: FindMyCompany
+      responses:
+        '200':
+          description: 取得成功
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CompanyResponse'
+        '401':
+          description: 認証エラー
+        '500':
+          description: 想定外サーバサイドエラー
+components:
+  schemas:
+    CompanyResponse:
+      type: object
+      required:
+        - uuid
+        - email
+        - business_experience
+      properties:
+        uuid:
+          type: string
+          format: uuid
+          description: 会社UUID
+          nullable: false
+        email:
+          type: string
+          format: email
+          description: メールアドレス
+          maxLength: 255
+          nullable: true
+        business_experience:
+          $ref: '#/components/schemas/BusinessExperience'
+    BusinessExperience:
+      type: object
+      description: 過去の事業経験
+      required:
+        - experience
+        - business_content
+        - stopped_business_date
+      properties:
+        experience:
+          type: integer
+          description: >-
+            過去の事業経験(0:事業を経営していたことはない/1:事業を経営していたことがあり、現在もその事業を続けている/2:事業を経営していたことがあるが、すでにその事業をやめている)
+          nullable: true
+          enum:
+            - 0
+            - 1
+            - 2
+          x-enum-varnames:
+            - NO_BUSINESS_EXPERIENCE
+            - RUNNING_BUSINESS
+            - QUIT_BUSINESS
+        business_content:
+          type: string
+          maxLength: 15
+          description: 現在も行っている事業内容
+          nullable: true
+        stopped_business_date:
+          type: string
+          format: date
+          description: 事業をやめた時期
+          nullable: true

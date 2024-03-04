@@ -1,0 +1,5 @@
+type: string
+format: email
+description: メールアドレス
+maxLength: 255
+nullable: true

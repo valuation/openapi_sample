@@ -1,0 +1,20 @@
+{
+    "name": "openapi_sample",
+    "version": "0.1.0",
+    "private": true,
+    "engines": {
+      "node": ">=18.17.1 <19",
+      "npm": ">=9.6.5 <10"
+    },
+    "scripts": {
+        "generate": "npm run generate_openapi && npm run generate_api_client",
+        "generate_openapi": "swagger-merger -i ./docs/openapi/openapi.yaml -o ./docs/openapi/build/merged_openapi.yaml",
+        "generate_api_client": "TS_POST_PROCESS_FILE='./node_modules/.bin/prettier --write' openapi-generator-cli generate -i docs/openapi/build/merged_openapi.yaml -g typescript-axios -o ./typescript --enable-post-process-file && rimraf ./typescript/types/index.ts"
+    },
+    "devDependencies": {
+        "@openapitools/openapi-generator-cli": "2.9.0",
+        "prettier": "3.2.2",
+        "rimraf": "5.0.1",
+        "swagger-merger": "1.5.4"
+    }
+}
